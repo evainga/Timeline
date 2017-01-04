@@ -18,3 +18,5 @@ public class Event {
 		java.lang.System.out.println(eventExample.eventDate + ": " + eventExample.eventName);
 	}
 }
+
+// test comment
