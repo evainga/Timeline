@@ -6,3 +6,4 @@ script: mvn clean test
 
 jdk:
 - oraclejdk8
+
