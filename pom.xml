@@ -6,7 +6,7 @@
 	<groupId>de.timeline</groupId>
 	<artifactId>timeline</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>timeline</name>
 	<description>Demo project for Spring Boot</description>
