@@ -4,31 +4,23 @@ import java.time.LocalDateTime;
 
 public class Event {
 
-	String eventName;
-	LocalDateTime eventDate;
+	private String eventName;
+	private LocalDateTime eventDate;
 
-	public void setName(String name) {
-		eventName = name;
+	public void setEventName(String eventName) {
+		this.eventName = eventName;
 	}
 
-	public void setDate(LocalDateTime date) {
-		eventDate = date;
+	public void setEventDate(LocalDateTime eventDate) {
+		this.eventDate = eventDate;
 	}
 
-	public String getName() {
-		return this.eventName;
+	public String getEventName() {
+		return eventName;
 	}
 
-	public LocalDateTime getDate() {
-		return this.eventDate;
+	public LocalDateTime getEventDate() {
+		return eventDate;
 	}
 
-	public static void main(String[] args) {
-		Event eventExample = new Event();
-		eventExample.setName("Weihnachten");
-		eventExample.setDate(LocalDateTime.of(2016, 12, 24, 18, 0, 0));
-		java.lang.System.out.println(eventExample.eventDate + ": " + eventExample.eventName);
-		java.lang.System.out.println(eventExample.getDate() + ": " + eventExample.getName());
-
-	}
 }
