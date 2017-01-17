@@ -5,7 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.time.LocalDateTime;
 
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 public class EventTest {
 	private Event testEvent = new Event();
