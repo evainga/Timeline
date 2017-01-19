@@ -2,8 +2,14 @@ package de.timeline;
 
 import java.time.LocalDateTime;
 
-public class Event {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Event {
 	private String eventName;
 	private LocalDateTime eventDate;
 
@@ -22,5 +28,4 @@ public class Event {
 	public LocalDateTime getEventDate() {
 		return eventDate;
 	}
-
 }
