@@ -12,13 +12,13 @@ public class EventTest {
 
 	@Test
 	public void testName() {
-		testEvent.setName("Weihnachten");
-		assertThat(testEvent.getName(), is("Weihnachten"));
+		testEvent.setEventName("Weihnachten");
+		assertThat(testEvent.getEventName(), is("Weihnachten"));
 	}
 
 	@Test
 	public void testDate() {
-		testEvent.setDate(LocalDateTime.of(2016, 12, 24, 18, 0, 0));
-		assertThat(testEvent.getDate(), is(LocalDateTime.of(2016, 12, 24, 18, 0, 0)));
+		testEvent.setEventDate(LocalDateTime.of(2016, 12, 24, 18, 0, 0));
+		assertThat(testEvent.getEventDate(), is(LocalDateTime.of(2016, 12, 24, 18, 0, 0)));
 	}
 }
