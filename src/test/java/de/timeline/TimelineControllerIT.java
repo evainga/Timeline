@@ -1,7 +1,9 @@
 package de.timeline;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -29,10 +31,8 @@ public class TimelineControllerIT extends AbstractTestNGSpringContextTests {
 				.get("events")
 				.then()
 				.statusCode(200)
-				.body("$", hasSize(2))
-				.body("[0].eventName", is("Ostern"))
-				.body("[0].eventDate.month", is("APRIL"))
-				.body("[1].eventName", is("Weihnachten"))
-				.body("[1].eventDate.month", is("DECEMBER"));
+				.body("$", hasSize(greaterThan(0)))
+				.body("[0].eventName", is(instanceOf(String.class)))
+				.body("[0].eventDate.month", is(instanceOf(String.class)));
 	}
 }
