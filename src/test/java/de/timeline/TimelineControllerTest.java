@@ -49,5 +49,4 @@ public class TimelineControllerTest extends MockitoTest {
 		assertThat(allEvents.get(2).getEventName(), is("Sommerfest"));
 		assertThat(allEvents.get(2).getEventDate(), is("2016-06-01T00:00"));
 	}
-
 }
