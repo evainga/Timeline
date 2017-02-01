@@ -4,7 +4,6 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,7 +31,7 @@ public class TimelineControllerIT extends AbstractTestNGSpringContextTests {
 				.then()
 				.statusCode(200)
 				.body("$", hasSize(greaterThan(0)))
-				.body("[0].eventName", is(instanceOf(String.class)))
-				.body("[0].eventDate.month", is(instanceOf(String.class)));
+				.body("[0].eventName", instanceOf(String.class))
+				.body("[0].eventDate.month", instanceOf(String.class));
 	}
 }

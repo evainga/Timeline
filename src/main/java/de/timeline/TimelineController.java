@@ -16,12 +16,12 @@ public class TimelineController {
 
 	@GetMapping(path = "/events", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public List<Event> showAllEvents() {
-		return timelineService.timelineService();
+		return timelineService.getAllEvents();
 
 	}
 
 	@PostMapping("/events")
 	public void createNewEvent(@RequestBody Event event) {
-		System.out.println(event);
+		timelineService.createEvent(event);
 	}
 }
