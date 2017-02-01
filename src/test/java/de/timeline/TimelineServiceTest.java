@@ -15,7 +15,6 @@ import org.testng.annotations.Test;
 
 public class TimelineServiceTest {
 	private TimelineService timelineService = new TimelineService();
-	Event sommer = new Event("Sommerfest", LocalDate.of(2001, 1, 1).atStartOfDay());
 
 	@BeforeMethod
 	private void setupDb() {
@@ -35,13 +34,13 @@ public class TimelineServiceTest {
 		assertThat(allEvents.get(0).getEventDate(), instanceOf(LocalDateTime.class));
 	}
 
-	// work in progress
 	@Test
 	public void createEvent() {
+		Event sommer = new Event("Sommeranfang", LocalDate.of(2016, 6, 1).atStartOfDay());
 		timelineService.createEvent(sommer);
 		List<Event> allEvents = timelineService.getAllEvents();
-		assertThat(allEvents.get(2).getEventName(), is("Sommerfest"));
-		assertThat(allEvents.get(2).getEventDate(), is(LocalDateTime.of(2001, 1, 1, 0, 0)));
+		assertThat(allEvents.get(2).getEventName(), is("Sommeranfang"));
+		assertThat(allEvents.get(2).getEventDate(), is(LocalDateTime.of(2016, 5, 1, 0, 0)));
 	}
 
 }
