@@ -38,7 +38,8 @@ public class TimelineServiceTest {
 	// work in progress
 	@Test
 	public void createEvent() {
-		List<Event> allEvents = timelineService.createEvent(sommer).getAllEvents();
+		timelineService.createEvent(sommer);
+		List<Event> allEvents = timelineService.getAllEvents();
 		assertThat(allEvents.get(2).getEventName(), is("Sommerfest"));
 		assertThat(allEvents.get(2).getEventDate(), is(LocalDateTime.of(2001, 1, 1, 0, 0)));
 	}

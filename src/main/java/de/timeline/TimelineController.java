@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.common.annotations.VisibleForTesting;
+
 @RestController
 public class TimelineController {
 	@Autowired
-	private TimelineService timelineService;
+	@VisibleForTesting
+	TimelineService timelineService;
 
 	@GetMapping(path = "/events", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public List<Event> showAllEvents() {
