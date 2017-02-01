@@ -40,7 +40,7 @@ public class TimelineServiceTest {
 		timelineService.createEvent(sommer);
 		List<Event> allEvents = timelineService.getAllEvents();
 		assertThat(allEvents.get(2).getEventName(), is("Sommeranfang"));
-		assertThat(allEvents.get(2).getEventDate(), is(LocalDateTime.of(2016, 5, 1, 0, 0)));
+		assertThat(allEvents.get(2).getEventDate(), is(LocalDateTime.of(2016, 6, 1, 0, 0)));
 	}
 
 }
