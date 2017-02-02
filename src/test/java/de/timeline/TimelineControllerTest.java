@@ -24,7 +24,7 @@ public class TimelineControllerTest extends MockitoTest {
 	@Test
 	public void showAllEvents() {
 		// given
-		when(timelineService.getAllEvents()).thenReturn(Lists.newArrayList(new Event()));
+		when(timelineService.getAllEvents()).thenReturn(Lists.newArrayList(new Event(), new Event()));
 
 		// when
 		List<Event> allEvents = timelineController.showAllEvents();
@@ -35,8 +35,13 @@ public class TimelineControllerTest extends MockitoTest {
 
 	@Test
 	public void createEvent() {
+		// given
 		Event sommer = new Event("Sommeranfang", LocalDate.of(2016, 6, 1).atStartOfDay());
+
+		// when
 		timelineController.createNewEvent(sommer);
+
+		// then
 		verify(timelineService).createEvent(sommer);
 	}
 }
