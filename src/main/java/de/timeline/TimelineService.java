@@ -32,6 +32,10 @@ public class TimelineService {
 	}
 
 	public void deleteEvent(Event oldEvent) {
-		eventDb.remove(oldEvent);
+		if (eventDb.contains(oldEvent) == true) {
+			eventDb.remove(oldEvent);
+		} else {
+			System.out.println("The event does not exist!");
+		}
 	}
 }
