@@ -30,4 +30,8 @@ public class TimelineService {
 	public void createEvent(Event newEvent) {
 		eventDb.add(newEvent);
 	}
+
+	public void deleteEvent(Event oldEvent) {
+		eventDb.remove(oldEvent);
+	}
 }

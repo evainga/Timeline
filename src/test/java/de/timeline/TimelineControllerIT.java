@@ -50,4 +50,16 @@ public class TimelineControllerIT extends AbstractTestNGSpringContextTests {
 		// .header(HttpHeaders.LOCATION, is("http://udjfjnr"));
 
 	}
+
+	@Test
+	public void deleteOldEvent() {
+		given(getPlainRequestSpec())
+				.when()
+				.body(new Event())
+				.contentType(ContentType.JSON)
+				.delete("events")
+				.then()
+				.statusCode(200);
+
+	}
 }

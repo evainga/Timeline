@@ -37,7 +37,13 @@ public class TimelineServiceTest {
 	public void createEvent() {
 		Event sommer = new Event("Sommeranfang", LocalDate.of(2016, 6, 1).atStartOfDay());
 		timelineService.createEvent(sommer);
+	}
 
+	@Test
+	public void deleteEvent() {
+		Event winter = new Event("Winteranfang", LocalDate.of(2016, 12, 21).atStartOfDay());
+		timelineService.createEvent(winter);
+		timelineService.deleteEvent(winter);
 	}
 
 }

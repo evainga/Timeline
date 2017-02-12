@@ -44,4 +44,17 @@ public class TimelineControllerTest extends MockitoTest {
 		// then
 		verify(timelineService).createEvent(sommer);
 	}
+
+	@Test
+	public void deleteEvent() {
+		// given
+		Event winter = new Event("Winteranfang", LocalDate.of(2016, 12, 21).atStartOfDay());
+		timelineService.createEvent(winter);
+
+		// when
+		timelineController.deleteOldEvent(winter);
+
+		// then
+		verify(timelineService).deleteEvent(winter);
+	}
 }
