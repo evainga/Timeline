@@ -2,10 +2,10 @@ package de.timeline;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -35,15 +35,27 @@ public class TimelineServiceTest {
 
 	@Test
 	public void createEvent() {
-		Event sommer = new Event("Sommeranfang", LocalDate.of(2016, 6, 1).atStartOfDay());
-		timelineService.createEvent(sommer);
+		Event createEvent = new Event();
+		timelineService.createEvent(createEvent);
+		List<Event> allEvents = timelineService.getAllEvents();
+		assertThat(allEvents, hasItem(createEvent));
 	}
 
 	@Test
-	public void deleteEvent() {
-		Event winter = new Event("Winteranfang", LocalDate.of(2016, 12, 21).atStartOfDay());
-		timelineService.createEvent(winter);
-		timelineService.deleteEvent(winter);
+	public void deleteExistingEvent() {
+		Event toDelete = new Event();
+		List<Event> allEvents = timelineService.getAllEvents();
+		timelineService.createEvent(toDelete);
+		timelineService.deleteEvent(toDelete);
+		assertThat(allEvents, hasItem(not(toDelete)));
+	}
+
+	@Test
+	public void deleteNonExistingEvent() {
+		Event toDelete = new Event();
+		List<Event> allEvents = timelineService.getAllEvents();
+		timelineService.deleteEvent(toDelete);
+		assertThat(allEvents, hasItem(not(toDelete)));
 	}
 
 }
