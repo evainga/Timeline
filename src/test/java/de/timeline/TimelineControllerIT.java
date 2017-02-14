@@ -36,7 +36,7 @@ public class TimelineControllerIT extends AbstractTestNGSpringContextTests {
 		given(getPlainRequestSpec())
 				.when()
 				.get("events")
-				.then().log().all()
+				.then()
 				.statusCode(200)
 				.body("$", hasSize(greaterThan(0)))
 				.body("[0].eventName", both(instanceOf(String.class)).and(not("")))
