@@ -7,11 +7,16 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
+
+import com.google.common.collect.Lists;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
@@ -35,14 +40,14 @@ public class TimelineControllerIT extends AbstractTestNGSpringContextTests {
 				.statusCode(200)
 				.body("$", hasSize(greaterThan(0)))
 				.body("[0].eventName", both(instanceOf(String.class)).and(not("")))
-				.body("[0].eventDate.month", both(instanceOf(String.class)).and(not("")));
+				.body("[0].eventDate", both(instanceOf(List.class)).and(not(Lists.newArrayList())));
 	}
 
 	@Test
 	public void createNewEvent() {
 		given(getPlainRequestSpec())
 				.when()
-				.body(new Event())
+				.body(new Event("Neujahr 2018", LocalDateTime.of(2018, 1, 1, 0, 0)))
 				.contentType(ContentType.JSON)
 				.post("events")
 				.then()
@@ -52,14 +57,17 @@ public class TimelineControllerIT extends AbstractTestNGSpringContextTests {
 	}
 
 	@Test
-	public void deleteOldEvent() {
+	public void deleteUnknownOldEvent() {
 		given(getPlainRequestSpec())
 				.when()
-				.body(new Event())
+				.body(new Event("nicht vorhandenes Event", LocalDateTime.now()))
 				.contentType(ContentType.JSON)
 				.delete("events")
 				.then()
-				.statusCode(200);
+				.statusCode(404);
+	}
 
+	@Test
+	public void createNewEventAndDeleteSubsequently() {
 	}
 }

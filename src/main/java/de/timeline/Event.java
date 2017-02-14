@@ -12,5 +12,4 @@ import lombok.NoArgsConstructor;
 public class Event {
 	private String eventName;
 	private LocalDateTime eventDate;
-
 }
