@@ -4,7 +4,7 @@ sudo: false
 
 install: true
 
-script: mvn clean test
+script: mvn clean verify
 
 jdk:
 - oraclejdk8
