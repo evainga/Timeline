@@ -69,12 +69,13 @@ public class TimelineControllerIT extends AbstractTestNGSpringContextTests {
 
 	@Test
 	public void createNewEventAndDeleteSubsequently() {
+		createNewEvent();
 		given(getPlainRequestSpec())
 				.when()
-				.body(new Event("Neujahr 2019", LocalDateTime.of(2019, 1, 1, 0, 0)))
+				.body(new Event("Neujahr 2018", LocalDateTime.of(2018, 1, 1, 0, 0)))
 				.contentType(ContentType.JSON)
 				.delete("events")
 				.then()
-				.statusCode(404);
+				.statusCode(204);
 	}
 }
