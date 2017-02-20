@@ -9,6 +9,7 @@ import static org.hamcrest.Matchers.not;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -47,7 +48,8 @@ public class TimelineControllerIT extends AbstractTestNGSpringContextTests {
 	public void createNewEvent() {
 		given(getPlainRequestSpec())
 				.when()
-				.body(new Event("Neujahr 2018", LocalDateTime.of(2018, 1, 1, 0, 0)))
+				.body(new Event(UUID.fromString("00000000-0000-0000-0000-000000000003"), "Neujahr 2018",
+						LocalDateTime.of(2018, 1, 1, 0, 0)))
 				.contentType(ContentType.JSON)
 				.post("events")
 				.then()
@@ -60,7 +62,8 @@ public class TimelineControllerIT extends AbstractTestNGSpringContextTests {
 	public void deleteUnknownOldEvent() {
 		given(getPlainRequestSpec())
 				.when()
-				.body(new Event("nicht vorhandenes Event", LocalDateTime.now()))
+				.body(new Event(UUID.fromString("00000000-0000-0000-0000-000000000000"), "nicht vorhandenes Event",
+						LocalDateTime.now()))
 				.contentType(ContentType.JSON)
 				.delete("events")
 				.then()
@@ -72,7 +75,8 @@ public class TimelineControllerIT extends AbstractTestNGSpringContextTests {
 		createNewEvent();
 		given(getPlainRequestSpec())
 				.when()
-				.body(new Event("Neujahr 2018", LocalDateTime.of(2018, 1, 1, 0, 0)))
+				.body(new Event(UUID.fromString("00000000-0000-0000-0000-000000000003"), "Neujahr 2018",
+						LocalDateTime.of(2018, 1, 1, 0, 0)))
 				.contentType(ContentType.JSON)
 				.delete("events")
 				.then()
