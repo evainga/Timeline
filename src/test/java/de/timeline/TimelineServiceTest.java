@@ -8,6 +8,7 @@ import static org.hamcrest.Matchers.not;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -29,6 +30,7 @@ public class TimelineServiceTest {
 	@Test
 	public void getFirstEvent() {
 		List<Event> allEvents = timelineService.getAllEvents();
+		assertThat(allEvents.get(0).getEventId(), instanceOf(UUID.class));
 		assertThat(allEvents.get(0).getEventName(), instanceOf(String.class));
 		assertThat(allEvents.get(0).getEventDate(), instanceOf(LocalDateTime.class));
 	}

@@ -40,6 +40,7 @@ public class TimelineControllerIT extends AbstractTestNGSpringContextTests {
 				.then()
 				.statusCode(200)
 				.body("$", hasSize(greaterThan(0)))
+				.body("[0].eventId", both(instanceOf(String.class)).and(not("")))
 				.body("[0].eventName", both(instanceOf(String.class)).and(not("")))
 				.body("[0].eventDate", both(instanceOf(List.class)).and(not(Lists.newArrayList())));
 	}

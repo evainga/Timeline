@@ -18,7 +18,7 @@ public class TimelineService {
 	@PostConstruct
 	@VisibleForTesting
 	void setupDb() {
-		Event easter = new Event(UUID.fromString("00000000-0000-0000-0000-000000000001"), "Ostern",
+		Event easter = new Event(UUID.randomUUID(), "Ostern",
 				LocalDate.of(2017, 4, 16).atStartOfDay());
 		Event christmas = new Event(UUID.fromString("00000000-0000-0000-0000-000000000002"), "Weihnachten",
 				LocalDate.of(2017, 12, 24).atStartOfDay());
