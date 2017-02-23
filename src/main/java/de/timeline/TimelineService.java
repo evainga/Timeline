@@ -13,7 +13,6 @@ import com.google.common.annotations.VisibleForTesting;
 
 @Service
 public class TimelineService {
-
 	private List<Event> eventDb = new ArrayList<>();
 
 	@PostConstruct
