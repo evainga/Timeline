@@ -1,9 +1,8 @@
 package de.timeline;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.PostConstruct;
@@ -14,31 +13,35 @@ import com.google.common.annotations.VisibleForTesting;
 
 @Service
 public class TimelineService {
-	private Map<UUID, Event> eventDb = new HashMap<UUID, Event>();
+
+	private List<Event> eventDb = new ArrayList<>();
 
 	@PostConstruct
 	@VisibleForTesting
 	void setupDb() {
-		{
-			eventDb.put(UUID.fromString("00000000-0000-0000-0000-000000000001"),
-					new Event(UUID.fromString("00000000-0000-0000-0000-000000000001"), "Ostern",
-							LocalDate.of(2017, 4, 16).atStartOfDay()));
-			eventDb.put(UUID.fromString("00000000-0000-0000-0000-000000000002"),
-					new Event(UUID.fromString("00000000-0000-0000-0000-000000000002"), "Weihnachten",
-							LocalDate.of(2017, 12, 24).atStartOfDay()));
-		}
+		Event easter = new Event(UUID.randomUUID(), "Ostern",
+				LocalDate.of(2017, 4, 16).atStartOfDay());
+		Event christmas = new Event(UUID.fromString("00000000-0000-0000-0000-000000000002"), "Weihnachten",
+				LocalDate.of(2017, 12, 24).atStartOfDay());
+		eventDb.add(easter);
+		eventDb.add(christmas);
 	}
 
-	public Collection<Event> getAllEvents() {
-		return eventDb.values();
+	public List<Event> getAllEvents() {
+		return eventDb;
 	}
 
 	public void createEvent(Event newEvent) {
-		eventDb.put(UUID.randomUUID(), newEvent);
+		eventDb.add(newEvent);
 	}
 
 	public boolean deleteEvent(UUID uuid) {
-		return eventDb.remove(uuid) != null;
+		for (Event event : eventDb) {
+			if (event.getEventId().equals(uuid)) {
+				return eventDb.remove(event);
+			}
+		}
+		return false;
 	}
 
 }

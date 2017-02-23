@@ -1,6 +1,6 @@
 package de.timeline;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class TimelineController {
 	private TimelineService timelineService;
 
 	@GetMapping(path = "/events", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public Collection<Event> showAllEvents() {
+	public List<Event> showAllEvents() {
 		return timelineService.getAllEvents();
 	}
 

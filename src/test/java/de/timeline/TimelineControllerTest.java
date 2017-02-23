@@ -54,9 +54,9 @@ public class TimelineControllerTest extends MockitoTest {
 				LocalDate.of(2016, 12, 21).atStartOfDay());
 
 		// when
-		timelineController.deleteOldEvent(winter);
+		timelineController.deleteOldEvent(UUID.fromString("00000000-0000-0000-0000-000000000005"));
 
 		// then
-		verify(timelineService).deleteEvent(winter);
+		verify(timelineService).deleteEvent(UUID.fromString("00000000-0000-0000-0000-000000000005"));
 	}
 }

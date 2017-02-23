@@ -6,8 +6,9 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import org.testng.annotations.BeforeMethod;
@@ -23,13 +24,13 @@ public class TimelineServiceTest {
 
 	@Test
 	public void getAllEvents() {
-		Collection<Event> allEvents = timelineService.getAllEvents();
+		List<Event> allEvents = timelineService.getAllEvents();
 		assertThat(allEvents, not(empty()));
 	}
 
 	@Test
 	public void getFirstEvent() {
-		Collection<Event> allEvents = timelineService.getAllEvents();
+		List<Event> allEvents = timelineService.getAllEvents();
 		assertThat(allEvents.get(0).getEventId(), instanceOf(UUID.class));
 		assertThat(allEvents.get(0).getEventName(), instanceOf(String.class));
 		assertThat(allEvents.get(0).getEventDate(), instanceOf(LocalDateTime.class));
@@ -39,24 +40,25 @@ public class TimelineServiceTest {
 	public void createEvent() {
 		Event createEvent = new Event();
 		timelineService.createEvent(createEvent);
-		Collection<Event> allEvents = timelineService.getAllEvents();
+		List<Event> allEvents = timelineService.getAllEvents();
 		assertThat(allEvents, hasItem(createEvent));
 	}
 
 	@Test
 	public void deleteExistingEvent() {
-		Event toDelete = new Event();
-		Collection<Event> allEvents = timelineService.getAllEvents();
-		timelineService.createEvent(toDelete);
-		timelineService.deleteEvent(toDelete);
+		Event toDelete = new Event(UUID.fromString("00000000-0000-0000-0000-000000000007"), "Weihnachten",
+				LocalDate.of(2017, 12, 24).atStartOfDay());
+		List<Event> allEvents = timelineService.getAllEvents();
+		timelineService.deleteEvent(UUID.fromString("00000000-0000-0000-0000-000000000007"));
 		assertThat(allEvents, hasItem(not(toDelete)));
 	}
 
 	@Test
 	public void deleteNonExistingEvent() {
-		Event toDelete = new Event();
-		Collection<Event> allEvents = timelineService.getAllEvents();
-		timelineService.deleteEvent(toDelete);
+		Event toDelete = new Event(UUID.fromString("00000000-0000-0000-0000-000000000008"), "Weihnachten",
+				LocalDate.of(2017, 12, 24).atStartOfDay());
+		List<Event> allEvents = timelineService.getAllEvents();
+		timelineService.deleteEvent(UUID.fromString("00000000-0000-0000-0000-000000000008"));
 		assertThat(allEvents, hasItem(not(toDelete)));
 	}
 
