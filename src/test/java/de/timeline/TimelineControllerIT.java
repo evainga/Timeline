@@ -61,25 +61,27 @@ public class TimelineControllerIT extends AbstractTestNGSpringContextTests {
 
 	@Test
 	public void deleteUnknownOldEvent() {
+		// siehe Änderung am Controller, uuid ist nun eine Pfad-Variable
+		// (@PathVariable) und daher hier entsprechend zu setzen!
 		given(getPlainRequestSpec())
 				.when()
-				.body(new Event(UUID.fromString("00000000-0000-0000-0000-000000000000"), "nicht vorhandenes Event",
-						LocalDateTime.now()))
-				.contentType(ContentType.JSON)
-				.delete("events")
+				.pathParam("uuid", UUID.randomUUID())
+				.delete("events/{uuid}")
 				.then()
 				.statusCode(404);
 	}
 
 	@Test
 	public void createNewEventAndDeleteSubsequently() {
+		// hier hast Du wieder eine Abhängigkeit zwischen Tests, bitte für den
+		// Löschtest hier ein eigenes Event erstellen!
 		createNewEvent();
+		// siehe Änderung am Controller, uuid ist nun eine Pfad-Variable
+		// (@PathVariable) und daher hier entsprechend zu setzen!
 		given(getPlainRequestSpec())
 				.when()
-				.body(new Event(UUID.fromString("00000000-0000-0000-0000-000000000003"), "Neujahr 2018",
-						LocalDateTime.of(2018, 1, 1, 0, 0)))
-				.contentType(ContentType.JSON)
-				.delete("events")
+				.pathParam("uuid", "00000000-0000-0000-0000-000000000003")
+				.delete("events/{uuid}")
 				.then()
 				.statusCode(204);
 	}
