@@ -71,15 +71,19 @@ public class TimelineControllerIT extends AbstractTestNGSpringContextTests {
 
 	@Test
 	public void createNewEventAndDeleteSubsequently() {
+		String deleteUUID = "00000000-0000-0000-0000-000000000009";
+
 		given(getPlainRequestSpec())
 				.when()
-				.body(new Event(UUID.fromString("00000000-0000-0000-0000-000000000009"), "Neujahr 2018",
+				.body(new Event(UUID.fromString(deleteUUID), "Neujahr 2018",
 						LocalDateTime.of(2018, 1, 1, 0, 0)))
 				.contentType(ContentType.JSON)
-				.post("events");
+				.post("events")
+				.then()
+				.statusCode(200);
 		given(getPlainRequestSpec())
 				.when()
-				.pathParam("uuid", "00000000-0000-0000-0000-000000000009")
+				.pathParam("uuid", deleteUUID)
 				.delete("events/{uuid}")
 				.then()
 				.statusCode(204);
