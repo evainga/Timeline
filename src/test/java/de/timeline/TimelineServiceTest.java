@@ -4,7 +4,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -38,9 +40,6 @@ public class TimelineServiceTest {
 
 	@Test
 	public void createEvent() {
-		// ein leeres Event hat überall null-Werte, die dann in anderen Tests
-		// NullPointerExceptions werfern!
-		// Event createEvent = new Event();
 		Event createEvent = new Event(UUID.randomUUID(), "dummy name", LocalDateTime.now());
 		timelineService.createEvent(createEvent);
 		List<Event> allEvents = timelineService.getAllEvents();
@@ -48,9 +47,17 @@ public class TimelineServiceTest {
 	}
 
 	@Test
+	public void getEventByUUID() {
+		Event eventUUID = new Event(UUID.fromString("00000000-0000-0000-0000-000000000002"), "Weihnachten",
+				LocalDate.of(2017, 12, 24).atStartOfDay());
+		assertThat(timelineService.getEventByUUID(UUID.fromString("00000000-0000-0000-0000-000000000002")),
+				is((eventUUID)));
+		assertThat(timelineService.getEventByUUID(UUID.fromString("00000000-0000-0000-0000-000000000404")),
+				is(nullValue()));
+	}
+
+	@Test
 	public void deleteExistingEvent() {
-		// hier stand eine UUID, die es nie in Deiner eventDb gab... damit hat
-		// auch das Löschen nicht funktioniert
 		Event toDelete = new Event(UUID.fromString("00000000-0000-0000-0000-000000000002"), "Weihnachten",
 				LocalDate.of(2017, 12, 24).atStartOfDay());
 		List<Event> allEvents = timelineService.getAllEvents();

@@ -31,8 +31,6 @@ public class TimelineController {
 	}
 
 	@DeleteMapping("/events/{uuid}")
-	// hier fehlte die uuid noch als Platzhalter im Mapping, das war sicher im
-	// Video so gezeigt!
 	public ResponseEntity<?> deleteOldEvent(@PathVariable UUID uuid) {
 		if (timelineService.deleteEvent(uuid)) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
