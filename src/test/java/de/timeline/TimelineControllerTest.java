@@ -2,6 +2,7 @@ package de.timeline;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -12,6 +13,7 @@ import java.util.UUID;
 
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.http.ResponseEntity;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.Lists;
@@ -37,14 +39,15 @@ public class TimelineControllerTest extends MockitoTest {
 	@Test
 	public void createEvent() {
 		// given
-		Event sommer = new Event(UUID.fromString("00000000-0000-0000-0000-000000000004"), "Sommeranfang",
-				LocalDate.of(2016, 6, 1).atStartOfDay());
+		UUID uuid = UUID.randomUUID();
+		Event sommer = new Event(uuid, "Sommeranfang", LocalDate.of(2016, 6, 1).atStartOfDay());
+		when(timelineService.createEvent(sommer)).thenReturn(uuid);
 
 		// when
-		timelineController.createNewEvent(sommer);
+		ResponseEntity<?> response = timelineController.createNewEvent(sommer);
 
 		// then
-		verify(timelineService).createEvent(sommer);
+		assertThat(response.getHeaders().getLocation().toString(), is(uuid.toString()));
 	}
 
 	@Test

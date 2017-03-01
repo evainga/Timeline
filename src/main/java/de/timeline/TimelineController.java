@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +27,11 @@ public class TimelineController {
 	}
 
 	@PostMapping("/events")
-	public void createNewEvent(@RequestBody Event event) {
-		timelineService.createEvent(event);
+	public ResponseEntity<?> createNewEvent(@RequestBody Event event) {
+		UUID uuid = timelineService.createEvent(event);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.LOCATION, uuid.toString());
+		return new ResponseEntity<>(headers, HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/events/{uuid}")

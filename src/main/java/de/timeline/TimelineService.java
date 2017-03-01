@@ -30,8 +30,11 @@ public class TimelineService {
 		return eventDb;
 	}
 
-	public void createEvent(Event newEvent) {
+	public UUID createEvent(Event newEvent) {
+		UUID uuid = UUID.randomUUID();
+		newEvent.setEventId(uuid);
 		eventDb.add(newEvent);
+		return uuid;
 	}
 
 	public Event getEventByUUID(UUID uuid) {

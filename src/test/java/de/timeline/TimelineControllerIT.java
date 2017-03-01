@@ -2,6 +2,7 @@ package de.timeline;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.both;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
@@ -14,6 +15,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
@@ -49,14 +51,12 @@ public class TimelineControllerIT extends AbstractTestNGSpringContextTests {
 	public void createNewEvent() {
 		given(getPlainRequestSpec())
 				.when()
-				.body(new Event(UUID.fromString("00000000-0000-0000-0000-000000000003"), "Neujahr 2018",
-						LocalDateTime.of(2018, 1, 1, 0, 0)))
+				.body(new Event(UUID.randomUUID(), "Neujahr 2018", LocalDateTime.of(2018, 1, 1, 0, 0)))
 				.contentType(ContentType.JSON)
 				.post("events")
 				.then()
-				.statusCode(200);
-		// .header(HttpHeaders.LOCATION, is("http://udjfjnr"));
-
+				.statusCode(201)
+				.header(HttpHeaders.LOCATION, not(empty()));
 	}
 
 	@Test
@@ -71,19 +71,19 @@ public class TimelineControllerIT extends AbstractTestNGSpringContextTests {
 
 	@Test
 	public void createNewEventAndDeleteSubsequently() {
-		String deleteUUID = "00000000-0000-0000-0000-000000000009";
-
-		given(getPlainRequestSpec())
+		String uuid = given(getPlainRequestSpec())
 				.when()
-				.body(new Event(UUID.fromString(deleteUUID), "Neujahr 2018",
+				.body(new Event(UUID.randomUUID(), "Neujahr 2018",
 						LocalDateTime.of(2018, 1, 1, 0, 0)))
 				.contentType(ContentType.JSON)
 				.post("events")
 				.then()
-				.statusCode(200);
+				.statusCode(201)
+				.extract().header(HttpHeaders.LOCATION);
+
 		given(getPlainRequestSpec())
 				.when()
-				.pathParam("uuid", deleteUUID)
+				.pathParam("uuid", uuid)
 				.delete("events/{uuid}")
 				.then()
 				.statusCode(204);
