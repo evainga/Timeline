@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
 import java.time.LocalDateTime;
@@ -51,12 +52,26 @@ public class TimelineControllerIT extends AbstractTestNGSpringContextTests {
 	public void createNewEvent() {
 		given(getPlainRequestSpec())
 				.when()
-				.body(new Event(UUID.randomUUID(), "Neujahr 2018", LocalDateTime.of(2018, 1, 1, 0, 0)))
+				.body(new Event("Neujahr 2018", LocalDateTime.of(2018, 1, 1, 0, 0)))
 				.contentType(ContentType.JSON)
 				.post("events")
 				.then()
 				.statusCode(201)
 				.header(HttpHeaders.LOCATION, not(empty()));
+	}
+
+	@Test
+	public void createNewEventWithoutName() {
+		given(getPlainRequestSpec())
+				.when() // Request
+				.body(new Event("", LocalDateTime.of(2018, 1, 1, 0, 0)))
+				.contentType(ContentType.JSON)
+				.post("events")
+				.then() // Logging Response
+				.statusCode(400)
+				.body("errors[0].objectName", is("event"))
+				.body("errors[0].field", is("eventName"))
+				.body("errors[0].code", is("NotBlank"));
 	}
 
 	@Test
@@ -73,8 +88,7 @@ public class TimelineControllerIT extends AbstractTestNGSpringContextTests {
 	public void createNewEventAndDeleteSubsequently() {
 		String uuid = given(getPlainRequestSpec())
 				.when()
-				.body(new Event(UUID.randomUUID(), "Neujahr 2018",
-						LocalDateTime.of(2018, 1, 1, 0, 0)))
+				.body(new Event("Neujahr 2018", LocalDateTime.of(2018, 1, 1, 0, 0)))
 				.contentType(ContentType.JSON)
 				.post("events")
 				.then()

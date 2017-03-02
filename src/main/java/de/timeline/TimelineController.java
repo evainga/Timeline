@@ -3,6 +3,8 @@ package de.timeline;
 import java.util.List;
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -27,7 +29,7 @@ public class TimelineController {
 	}
 
 	@PostMapping("/events")
-	public ResponseEntity<?> createNewEvent(@RequestBody Event event) {
+	public ResponseEntity<?> createNewEvent(@Valid @RequestBody Event event) {
 		UUID uuid = timelineService.createEvent(event);
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.LOCATION, uuid.toString());
