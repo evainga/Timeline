@@ -7,14 +7,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class Event {
 	@JsonIgnore
 	private UUID eventId;
-	private String eventName;
-	private LocalDateTime eventDate;
+	private final String eventName;
+	private final LocalDateTime eventDate;
 }

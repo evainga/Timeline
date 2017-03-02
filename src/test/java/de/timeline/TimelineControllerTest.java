@@ -1,9 +1,9 @@
 package de.timeline;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -27,13 +27,14 @@ public class TimelineControllerTest extends MockitoTest {
 	@Test
 	public void showAllEvents() {
 		// given
-		when(timelineService.getAllEvents()).thenReturn(Lists.newArrayList(new Event(), new Event()));
+		Event event = mock(Event.class);
+		when(timelineService.getAllEvents()).thenReturn(Lists.newArrayList(event, event));
 
 		// when
 		List<Event> allEvents = timelineController.showAllEvents();
 
 		// then
-		assertThat(allEvents, not(empty()));
+		assertThat(allEvents, hasSize(2));
 	}
 
 	@Test
@@ -52,10 +53,6 @@ public class TimelineControllerTest extends MockitoTest {
 
 	@Test
 	public void deleteEvent() {
-		// given
-		Event winter = new Event(UUID.fromString("00000000-0000-0000-0000-000000000005"), "Winteranfang",
-				LocalDate.of(2016, 12, 21).atStartOfDay());
-
 		// when
 		timelineController.deleteOldEvent(UUID.fromString("00000000-0000-0000-0000-000000000005"));
 
