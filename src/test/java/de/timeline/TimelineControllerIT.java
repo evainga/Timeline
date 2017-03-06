@@ -61,17 +61,17 @@ public class TimelineControllerIT extends AbstractTestNGSpringContextTests {
 	}
 
 	@Test
-	public void createNewEventWithoutName() {
+	public void createNewEventWithInvalidName() {
 		given(getPlainRequestSpec())
 				.when() // Request
-				.body(new Event("", LocalDateTime.of(2018, 1, 1, 0, 0)))
+				.body(new Event("Te", LocalDateTime.of(2018, 1, 1, 0, 0)))
 				.contentType(ContentType.JSON)
 				.post("events")
 				.then() // Logging Response
 				.statusCode(400)
 				.body("errors[0].objectName", is("event"))
-				.body("errors[0].field", is("eventName"))
-				.body("errors[0].code", is("NotBlank"));
+				.body("errors[0].field", is("eventName"));
+		// .body("errors[0].code", is("NotBlank"));
 	}
 
 	@Test

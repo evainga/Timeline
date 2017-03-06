@@ -3,7 +3,7 @@ package de.timeline;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class Event {
 	@JsonIgnore
 	private UUID eventId;
-	@NotBlank
+	@Size(min = 3, message = "You must use at least 3 characters")
 	private final String eventName;
 	// @Future
 	private final LocalDateTime eventDate;
