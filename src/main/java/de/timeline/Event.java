@@ -1,6 +1,6 @@
 package de.timeline;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 import javax.validation.constraints.Size;
@@ -20,5 +20,5 @@ public class Event {
 	@Size(min = 3, message = "You must use at least 3 characters")
 	private final String eventName;
 	// @Future
-	private final LocalDateTime eventDate;
+	private final ZonedDateTime eventDate;
 }

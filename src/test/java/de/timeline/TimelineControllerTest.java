@@ -7,7 +7,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,7 +42,8 @@ public class TimelineControllerTest extends MockitoTest {
 	public void createEvent() {
 		// given
 		UUID uuid = UUID.randomUUID();
-		Event sommer = new Event(uuid, "Sommeranfang", LocalDate.of(2016, 6, 1).atStartOfDay());
+		Event sommer = new Event(uuid, "Sommeranfang",
+				ZonedDateTime.of(2016, 6, 1, 0, 0, 0, 00, ZoneId.of("Europe/Paris")));
 		when(timelineService.createEvent(sommer)).thenReturn(uuid);
 
 		// when

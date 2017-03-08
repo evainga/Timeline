@@ -1,6 +1,7 @@
 package de.timeline;
 
-import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -19,9 +20,9 @@ public class TimelineService {
 	@VisibleForTesting
 	void setupDb() {
 		Event easter = new Event(UUID.fromString("00000000-0000-0000-0000-000000000001"), "Ostern",
-				LocalDate.of(2017, 4, 16).atStartOfDay());
+				ZonedDateTime.of(2017, 04, 12, 10, 15, 30, 00, ZoneId.of("Europe/Paris")));
 		Event christmas = new Event(UUID.fromString("00000000-0000-0000-0000-000000000002"), "Weihnachten",
-				LocalDate.of(2017, 12, 24).atStartOfDay());
+				ZonedDateTime.of(2017, 12, 24, 00, 00, 00, 00, ZoneId.of("Europe/Paris")));
 		eventDb.add(easter);
 		eventDb.add(christmas);
 	}
