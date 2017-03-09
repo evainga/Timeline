@@ -3,6 +3,7 @@ package de.timeline;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -19,6 +20,6 @@ public class Event {
 	private UUID eventId;
 	@Size(min = 3, message = "You must use at least 3 characters")
 	private final String eventName;
-	// @Future
+	@Past
 	private final ZonedDateTime eventDate;
 }

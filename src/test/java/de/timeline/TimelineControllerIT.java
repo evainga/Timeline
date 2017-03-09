@@ -52,7 +52,7 @@ public class TimelineControllerIT extends AbstractTestNGSpringContextTests {
 	public void createNewEvent() {
 		given(getPlainRequestSpec())
 				.when()
-				.body(new Event("Neujahr 2018", ZonedDateTime.of(2018, 1, 1, 0, 0, 0, 00, ZoneId.of("Europe/Paris"))))
+				.body(new Event("Neujahr 2018", ZonedDateTime.of(2015, 1, 1, 0, 0, 0, 00, ZoneId.of("Europe/Paris"))))
 				.contentType(ContentType.JSON)
 				.post("events")
 				.then()
@@ -63,15 +63,29 @@ public class TimelineControllerIT extends AbstractTestNGSpringContextTests {
 	@Test
 	public void createNewEventWithInvalidName() {
 		given(getPlainRequestSpec())
-				.when() // Request
-				.body(new Event("Te", ZonedDateTime.of(2018, 1, 1, 0, 0, 0, 00, ZoneId.of("Europe/Paris"))))
+				.when()
+				.body(new Event("Te", ZonedDateTime.of(2015, 1, 1, 0, 0, 0, 00, ZoneId.of("Europe/Paris"))))
 				.contentType(ContentType.JSON)
 				.post("events")
-				.then() // Logging Response
+				.then()
 				.statusCode(400)
 				.body("errors[0].objectName", is("event"))
-				.body("errors[0].field", is("eventName"));
-		// .body("errors[0].code", is("NotBlank"));
+				.body("errors[0].field", is("eventName"))
+				.body("errors[0].code", is("Size"));
+	}
+
+	@Test
+	public void createNewEventWithInvalidDate() {
+		given(getPlainRequestSpec())
+				.when()
+				.body(new Event("Test", ZonedDateTime.of(2018, 1, 1, 0, 0, 0, 00, ZoneId.of("Europe/Paris"))))
+				.contentType(ContentType.JSON)
+				.post("events")
+				.then()
+				.statusCode(400)
+				.body("errors[0].objectName", is("event"))
+				.body("errors[0].field", is("eventDate"))
+				.body("errors[0].code", is("Past"));
 	}
 
 	@Test
@@ -88,7 +102,7 @@ public class TimelineControllerIT extends AbstractTestNGSpringContextTests {
 	public void createNewEventAndDeleteSubsequently() {
 		String uuid = given(getPlainRequestSpec())
 				.when()
-				.body(new Event("Neujahr 2018", ZonedDateTime.of(2018, 1, 1, 0, 0, 0, 00, ZoneId.of("Europe/Paris"))))
+				.body(new Event("Neujahr 2018", ZonedDateTime.of(2015, 1, 1, 0, 0, 0, 00, ZoneId.of("Europe/Paris"))))
 				.contentType(ContentType.JSON)
 				.post("events")
 				.then()
