@@ -39,6 +39,22 @@ public class TimelineControllerTest extends MockitoTest {
 	}
 
 	@Test
+	public void showSpecificEvent() {
+
+		// given
+		UUID uuid = UUID.fromString("00000000-0000-0000-0000-000000000002");
+		Event christmas = new Event(uuid, "Sommeranfang",
+				ZonedDateTime.of(2016, 6, 1, 0, 0, 0, 00, ZoneId.of("Europe/Paris")));
+		when(timelineService.getEventByUUID(uuid)).thenReturn(christmas);
+
+		// when
+		Event specificEvent = timelineController.showSpecificEvent(uuid);
+
+		// then
+		assertThat(specificEvent, is(christmas));
+	}
+
+	@Test
 	public void createEvent() {
 		// given
 		UUID uuid = UUID.randomUUID();

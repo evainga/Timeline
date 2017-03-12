@@ -28,6 +28,11 @@ public class TimelineController {
 		return timelineService.getAllEvents();
 	}
 
+	@GetMapping(path = "/events/{uuid}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public Event showSpecificEvent(@PathVariable UUID uuid) {
+		return timelineService.getEventByUUID(uuid);
+	}
+
 	@PostMapping("/events")
 	public ResponseEntity<?> createNewEvent(@Valid @RequestBody Event event) {
 		UUID uuid = timelineService.createEvent(event);

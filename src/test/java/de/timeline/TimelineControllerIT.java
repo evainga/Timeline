@@ -49,6 +49,18 @@ public class TimelineControllerIT extends AbstractTestNGSpringContextTests {
 	}
 
 	@Test
+	public void showSpecificEvent() {
+		given(getPlainRequestSpec())
+				.when()
+				.pathParam("uuid", UUID.fromString("00000000-0000-0000-0000-000000000002"))
+				.get("events/{uuid}")
+				.then()
+				.statusCode(200)
+				.body("eventId", is("00000000-0000-0000-0000-000000000002"))
+				.body("eventName", is("Weihnachten"));
+	}
+
+	@Test
 	public void createNewEvent() {
 		given(getPlainRequestSpec())
 				.when()
