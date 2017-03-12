@@ -4,6 +4,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.annotation.PostConstruct;
@@ -38,17 +39,17 @@ public class TimelineService {
 		return uuid;
 	}
 
-	public Event getEventByUUID(UUID uuid) {
-		for (Event event : eventDb) {
-			if (event.getEventId().equals(uuid)) {
-				return event;
-			}
-		}
-		return null;
+	public Optional<Event> getEventByUUID(UUID uuid) {
+		return eventDb.stream()
+				.filter(event -> event.getEventId().equals(uuid))
+				.findFirst();
 	}
 
 	public boolean deleteEvent(UUID uuid) {
-		return eventDb.remove(getEventByUUID(uuid));
+		Optional<Event> eventByUUID = getEventByUUID(uuid);
+		if (!eventByUUID.isPresent())
+			return false;
+		return eventDb.remove(eventByUUID.get());
 	}
 
 }

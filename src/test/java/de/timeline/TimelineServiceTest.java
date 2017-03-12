@@ -6,11 +6,11 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.testng.annotations.BeforeMethod;
@@ -50,10 +50,12 @@ public class TimelineServiceTest {
 	public void getEventByUUID() {
 		Event eventUUID = new Event(UUID.fromString("00000000-0000-0000-0000-000000000002"), "Weihnachten",
 				ZonedDateTime.of(2017, 12, 24, 0, 0, 0, 00, ZoneId.of("Europe/Paris")));
-		assertThat(timelineService.getEventByUUID(UUID.fromString("00000000-0000-0000-0000-000000000002")),
-				is((eventUUID)));
-		assertThat(timelineService.getEventByUUID(UUID.fromString("00000000-0000-0000-0000-000000000404")),
-				is(nullValue()));
+
+		Optional<Event> existingEvent = timelineService.getEventByUUID(UUID.fromString("00000000-0000-0000-0000-000000000002"));
+		Optional<Event> notExistingEvent = timelineService.getEventByUUID(UUID.fromString("00000000-0000-0000-0000-000000000404"));
+
+		assertThat(existingEvent.get(), is((eventUUID)));
+		assertThat(notExistingEvent, is(Optional.empty()));
 	}
 
 	@Test
