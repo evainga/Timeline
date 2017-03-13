@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.mockito.InjectMocks;
@@ -40,18 +41,16 @@ public class TimelineControllerTest extends MockitoTest {
 
 	@Test
 	public void showSpecificEvent() {
-
 		// given
 		UUID uuid = UUID.fromString("00000000-0000-0000-0000-000000000002");
-		Event christmas = new Event(uuid, "Sommeranfang",
-				ZonedDateTime.of(2016, 6, 1, 0, 0, 0, 00, ZoneId.of("Europe/Paris")));
-		when(timelineService.getEventByUUID(uuid)).thenReturn(christmas);
+		Event christmas = new Event(uuid, "Sommeranfang", ZonedDateTime.of(2016, 6, 1, 0, 0, 0, 00, ZoneId.of("Europe/Paris")));
+		when(timelineService.getEventByUUID(uuid)).thenReturn(Optional.of(christmas));
 
 		// when
-		Event specificEvent = timelineController.showSpecificEvent(uuid);
+		ResponseEntity<Event> specificEvent = timelineController.showSpecificEvent(uuid);
 
 		// then
-		assertThat(specificEvent, is(christmas));
+		assertThat(specificEvent.getBody(), is(christmas));
 	}
 
 	@Test

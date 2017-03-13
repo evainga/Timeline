@@ -1,6 +1,7 @@
 package de.timeline;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -29,8 +30,13 @@ public class TimelineController {
 	}
 
 	@GetMapping(path = "/events/{uuid}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public Event showSpecificEvent(@PathVariable UUID uuid) {
-		return timelineService.getEventByUUID(uuid);
+	public ResponseEntity<Event> showSpecificEvent(@PathVariable UUID uuid) {
+		Optional<Event> event = timelineService.getEventByUUID(uuid);
+		if (event.isPresent()) {
+			return new ResponseEntity<>(event.get(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 
 	@PostMapping("/events")
@@ -49,5 +55,4 @@ public class TimelineController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-
 }
