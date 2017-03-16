@@ -43,7 +43,7 @@ public class TimelineControllerIT extends AbstractTestNGSpringContextTests {
 				.body("$", hasSize(greaterThan(0)))
 				.body("[0].eventId", both(instanceOf(String.class)).and(not("")))
 				.body("[0].eventName", both(instanceOf(String.class)).and(not("")))
-				.body("[0].eventDate", both(instanceOf(Object.class)).and(not("")));
+				.body("[0].eventDate", instanceOf(Object.class));
 		// OK ok, I know this does not count... I can't figure out which class
 		// it should be.
 	}
